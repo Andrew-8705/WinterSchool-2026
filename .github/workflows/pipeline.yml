@@ -1,0 +1,90 @@
+name: RISC-V Qemu test
+
+on: [push, pull_request]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  Build_Test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: install build deps
+        run: |
+              sudo apt-get update
+              sudo apt-get install cmake make
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install gdown
+        run: pip install gdown
+
+      - name: Get sc-dt toolchain
+        run: |
+              gdown https://drive.google.com/uc?id=1GesPVEACp5imxOwvOnd0WWRrBswmG7RB
+              tar -xvf sc-dt-2023.11.tar.gz -C /opt
+
+
+      - name: Build
+        run: |
+              export PATH="/opt/sc-dt/llvm/bin/:$PATH"
+              cmake CMakeLists.txt -DENABLE_TEST=ON -DENABLE_BENCH=ON -DTARGET_ARCH=RISCV_VECTOR -DUSE_OPENMP=OFF -DENABLE_EXAMPLES=OFF -DCMAKE_C_COMPILER=/opt/sc-dt/llvm/bin/clang -DCMAKE_CXX_COMPILER=/opt/sc-dt/llvm/bin/clang++ -DBUILD_TYPE=Release -DBUILD_STATIC=ON -B_build
+              cmake --build _build
+
+      - name: Test
+        run: |
+              export PATH="/opt/sc-dt/tools/bin/:$PATH"
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/test/abs_scalar_test
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/test/abs_rvv_test
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/test/alpha_compositing_scalar_test
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/test/alpha_compositing_rvv_test
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/test/blur_filter_scalar_test
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/test/blur_filter_rvv_test
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/test/dot_scalar_test
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/test/dot_rvv_test
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/test/gemm_scalar_test
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/test/gemm_rvv_test
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/test/gemv_scalar_test
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/test/gemv_rvv_test
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/test/iamin_scalar_test
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/test/iamin_rvv_test
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/test/nrm2_scalar_test
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/test/nrm2_rvv_test
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/test/strlen_scalar_test
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/test/strlen_rvv_test
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/test/symv_scalar_test
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/test/symv_rvv_test
+
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/perf/abs_scalar_perf
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/perf/abs_rvv_perf
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/perf/alpha_compositing_scalar_perf
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/perf/alpha_compositing_rvv_perf
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/perf/blur_filter_scalar_perf
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/perf/blur_filter_rvv_perf
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/perf/dot_scalar_perf
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/perf/dot_rvv_perf
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/perf/gemm_scalar_perf
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/perf/gemm_rvv_perf
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/perf/gemv_scalar_perf
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/perf/gemv_rvv_perf
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/perf/iamin_scalar_perf
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/perf/iamin_rvv_perf
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/perf/nrm2_scalar_perf
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/perf/nrm2_rvv_perf
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/perf/strlen_scalar_perf
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/perf/strlen_rvv_perf
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/perf/symv_scalar_perf
+              qemu-riscv64 -cpu rv64,v=on,vlen=256 -L /opt/sc-dt/riscv-gcc/sysroot/ ./_build/perf/symv_rvv_perf
