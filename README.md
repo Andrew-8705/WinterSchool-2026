@@ -1,4 +1,4 @@
-# Optimization practice for UNN Winter School 2025
+# Optimization practice for UNN Winter School 2026
 
 Репозиторий для практической работы по оптимизации алгоритмов для архитектуры RISC-V и работы с симулятором Gem5.
 
