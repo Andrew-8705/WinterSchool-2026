@@ -1,4 +1,8 @@
 #include "perf_common.hpp"
+#include <linux/perf_event.h>
+#include <asm/unistd.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
 
 #if defined(scalar)
 #define MOD scalar
@@ -43,6 +47,14 @@ static inline void bench_abs(int length, int iterations) {
 }
 
 int main() {
+
+    struct perf_event_attr pe = { 0 }; 
+    pe.type = PERF_TYPE_HARDWARE; 
+    pe.size = sizeof pe;
+    pe.config = PERF_COUNT_HW_CPU_CYCLES;
+    pe.disabled = 0;
+    pe.exclude_kernel = 1;
+    long fd = syscall(__NR_perf_event_open, &pe, 0, -1, -1, 0);
 
     //
     // Bench small sizes
