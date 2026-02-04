@@ -14,7 +14,7 @@ extern "C" {
 [[maybe_unused]]
 static void prepareString(uint8_t* str, int length) {
     std::mt19937 rng(std::random_device{}());
-    std::uniform_int_distribution<uint8_t> dist(0, 255);
+    std::uniform_int_distribution<uint8_t> dist(1, 255);
 
     std::generate(str, str + length, [&]() { return dist(rng); });
     str[length-1] = '\0';
