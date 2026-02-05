@@ -58,37 +58,57 @@ int main() {
     pe.exclude_kernel = 1;
     long fd = syscall(__NR_perf_event_open, &pe, 0, -1, -1, 0);
 
-    constexpr int small_length1 = 32;
-    constexpr int small_iterations1 = 100'000;
-    bench_strlen(small_length1, small_iterations1);
+    bench_strlen(32, 100'000);
 
-    constexpr int small_length2 = 64;
-    constexpr int small_iterations2 = 100'000;
-    bench_strlen(small_length2, small_iterations2);
+    bench_strlen(64, 100'000);
 
-    constexpr int small_length3 = 128;
-    constexpr int small_iterations3 = 100'000;
-    bench_strlen(small_length3, small_iterations3);
+    bench_strlen(128, 100'000);
 
-    constexpr int small_length4 = 256;
-    constexpr int small_iterations4 = 10'000;
-    bench_strlen(small_length4, small_iterations4);
+    bench_strlen(256, 10'000);
 
-    constexpr int small_length5 = 512;
-    constexpr int small_iterations5 = 10'000;
-    bench_strlen(small_length5, small_iterations5);
+    bench_strlen(512, 10'000);
 
-    constexpr int medium_length6 = 1024;
-    constexpr int medium_iterations6 = 1'000;
-    bench_strlen(medium_length6, medium_iterations6);
+    bench_strlen(1024, 1'000);
 
-    constexpr int small_length7 = 32768;
-    constexpr int small_iterations7 = 100;
-    bench_strlen(small_length7, small_iterations7);
+    bench_strlen(32768, 100);
 
-    constexpr int big_length = 524288;
-    constexpr int big_iterations = 100;
-    bench_strlen(big_length, big_iterations);
+    bench_strlen(524288, 100);
+
+    // ========= //
+
+    bench_strlen(1, 100'000);
+
+    bench_strlen(4, 100'000);
+
+    bench_strlen(8, 100'000);
+
+    bench_strlen(15, 100'000);
+
+    bench_strlen(16, 100'000);
+
+    bench_strlen(17, 100'000);
+
+    bench_strlen(31, 100'000);
+
+    // ========= //
+
+    bench_strlen(4090, 1'000);
+
+    bench_strlen(4096, 1'000);
+
+    bench_strlen(4097, 1'000);
+
+    // ========= //
+
+    bench_strlen(32760, 1'000);
+
+    bench_strlen(32768, 1'000);
+
+    bench_strlen(32770, 1'000);
+
+    // ========= //
+
+    bench_strlen(262144, 1'000);
 
     return 0;
 }
