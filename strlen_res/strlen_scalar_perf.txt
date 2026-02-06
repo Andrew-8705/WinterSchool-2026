@@ -1,0 +1,111 @@
+scalar
+================================
+Testing Scalar STRLEN with length 32
+122 cycles min
+122 cycles average
+================================
+================================
+Testing Scalar STRLEN with length 64
+145 cycles min
+147 cycles average
+================================
+================================
+Testing Scalar STRLEN with length 128
+194 cycles min
+195 cycles average
+================================
+================================
+Testing Scalar STRLEN with length 256
+291 cycles min
+291 cycles average
+================================
+================================
+Testing Scalar STRLEN with length 512
+483 cycles min
+485 cycles average
+================================
+================================
+Testing Scalar STRLEN with length 1024
+867 cycles min
+867 cycles average
+================================
+================================
+Testing Scalar STRLEN with length 32768
+24800 cycles min
+25002 cycles average
+================================
+================================
+Testing Scalar STRLEN with length 524288
+400569 cycles min
+404697 cycles average
+================================
+================================
+Testing Scalar STRLEN with length 1
+55 cycles min
+55 cycles average
+================================
+================================
+Testing Scalar STRLEN with length 4
+73 cycles min
+73 cycles average
+================================
+================================
+Testing Scalar STRLEN with length 8
+82 cycles min
+83 cycles average
+================================
+================================
+Testing Scalar STRLEN with length 15
+109 cycles min
+109 cycles average
+================================
+================================
+Testing Scalar STRLEN with length 16
+110 cycles min
+110 cycles average
+================================
+================================
+Testing Scalar STRLEN with length 17
+100 cycles min
+100 cycles average
+================================
+================================
+Testing Scalar STRLEN with length 31
+121 cycles min
+121 cycles average
+================================
+================================
+Testing Scalar STRLEN with length 4090
+3165 cycles min
+3165 cycles average
+================================
+================================
+Testing Scalar STRLEN with length 4096
+3176 cycles min
+3178 cycles average
+================================
+================================
+Testing Scalar STRLEN with length 4097
+3166 cycles min
+3209 cycles average
+================================
+================================
+Testing Scalar STRLEN with length 32760
+24856 cycles min
+25119 cycles average
+================================
+================================
+Testing Scalar STRLEN with length 32768
+24862 cycles min
+25108 cycles average
+================================
+================================
+Testing Scalar STRLEN with length 32770
+24834 cycles min
+25086 cycles average
+================================
+================================
+Testing Scalar STRLEN with length 262144
+199593 cycles min
+200659 cycles average
+================================

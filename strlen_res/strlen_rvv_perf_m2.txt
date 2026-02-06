@@ -1,0 +1,111 @@
+m2
+================================
+Testing RVV STRLEN with length 32
+85 cycles min
+85 cycles average
+================================
+================================
+Testing RVV STRLEN with length 64
+83 cycles min
+85 cycles average
+================================
+================================
+Testing RVV STRLEN with length 128
+112 cycles min
+113 cycles average
+================================
+================================
+Testing RVV STRLEN with length 256
+169 cycles min
+169 cycles average
+================================
+================================
+Testing RVV STRLEN with length 512
+281 cycles min
+282 cycles average
+================================
+================================
+Testing RVV STRLEN with length 1024
+505 cycles min
+505 cycles average
+================================
+================================
+Testing RVV STRLEN with length 32768
+14589 cycles min
+14806 cycles average
+================================
+================================
+Testing RVV STRLEN with length 524288
+235034 cycles min
+237821 cycles average
+================================
+================================
+Testing RVV STRLEN with length 1
+85 cycles min
+85 cycles average
+================================
+================================
+Testing RVV STRLEN with length 4
+85 cycles min
+85 cycles average
+================================
+================================
+Testing RVV STRLEN with length 8
+85 cycles min
+85 cycles average
+================================
+================================
+Testing RVV STRLEN with length 15
+83 cycles min
+85 cycles average
+================================
+================================
+Testing RVV STRLEN with length 16
+85 cycles min
+85 cycles average
+================================
+================================
+Testing RVV STRLEN with length 17
+84 cycles min
+85 cycles average
+================================
+================================
+Testing RVV STRLEN with length 31
+85 cycles min
+85 cycles average
+================================
+================================
+Testing RVV STRLEN with length 4090
+1849 cycles min
+1849 cycles average
+================================
+================================
+Testing RVV STRLEN with length 4096
+1849 cycles min
+1849 cycles average
+================================
+================================
+Testing RVV STRLEN with length 4097
+1877 cycles min
+1878 cycles average
+================================
+================================
+Testing RVV STRLEN with length 32760
+14503 cycles min
+14729 cycles average
+================================
+================================
+Testing RVV STRLEN with length 32768
+14503 cycles min
+14704 cycles average
+================================
+================================
+Testing RVV STRLEN with length 32770
+14597 cycles min
+14766 cycles average
+================================
+================================
+Testing RVV STRLEN with length 262144
+115463 cycles min
+116267 cycles average
+================================
